@@ -10,7 +10,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Copy, RefreshCw, Wand2, Info, ArrowDownToLine } from 'lucide-react';
+import { Copy, RefreshCw, Wand2, Info, ArrowDownToLine, Menu, X } from 'lucide-react';
 import SloganGenerator from './components/SloganGenerator';
 import DomainChecker from './components/DomainChecker';
 
@@ -64,7 +64,7 @@ function LandingPage({ onStart }: { onStart: () => void }) {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.8 }}
-        className="text-6xl md:text-8xl font-extrabold tracking-tighter text-slate-900 mb-8"
+        className="text-5xl md:text-8xl font-extrabold tracking-tighter text-slate-900 mb-8"
       >
         {text.split("negócio")[0]}
         {text.includes("negócio") && <span className="text-indigo-600">negócio</span>}
@@ -74,7 +74,7 @@ function LandingPage({ onStart }: { onStart: () => void }) {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="text-xl text-slate-600 mb-12 max-w-2xl"
+        className="text-lg md:text-xl text-slate-600 mb-12 max-w-2xl"
       >
         O NameCreator transforma palavras simples em marcas memoráveis. Comece agora e encontre o nome perfeito.
       </motion.p>
@@ -96,6 +96,7 @@ export default function App() {
   const [names, setNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<'landing' | 'home' | 'about' | 'slogan' | 'domain'>('landing');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const generateNames = () => {
     if (!keyword.trim()) return;
@@ -131,29 +132,51 @@ export default function App() {
     element.click();
   };
 
-  const resetApp = () => {
-    setKeyword('');
-    setNames([]);
-    setLoading(false);
-    setCurrentPage('home');
-  };
+  const navLinks = (
+    <>
+      <button onClick={() => { setCurrentPage('landing'); setIsMenuOpen(false); }} className="hover:text-indigo-600">Home</button>
+      <button onClick={() => { setCurrentPage('home'); setIsMenuOpen(false); }} className="hover:text-indigo-600">Nomes</button>
+      <button onClick={() => { setCurrentPage('slogan'); setIsMenuOpen(false); }} className="hover:text-indigo-600">Slogan</button>
+      <button onClick={() => { setCurrentPage('domain'); setIsMenuOpen(false); }} className="hover:text-indigo-600">Domínio</button>
+      <button onClick={() => { setCurrentPage('about'); setIsMenuOpen(false); }} className="hover:text-indigo-600">Sobre</button>
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans flex flex-col">
       <header className="border-b border-slate-200">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button onClick={() => { setKeyword(''); setNames([]); setLoading(false); setCurrentPage('landing'); }} className="text-2xl font-bold flex items-center gap-2">
+          <button onClick={() => { setKeyword(''); setNames([]); setLoading(false); setCurrentPage('landing'); setIsMenuOpen(false); }} className="text-2xl font-bold flex items-center gap-2">
             <Wand2 className="w-8 h-8 text-indigo-600" />
             <span className="text-slate-900">Name</span><span className="text-indigo-600">Creator</span>
           </button>
-          <div className="flex gap-6 text-sm font-medium text-slate-600">
-            <button onClick={() => setCurrentPage('landing')} className="hover:text-indigo-600">Home</button>
-            <button onClick={() => setCurrentPage('home')} className="hover:text-indigo-600">Nomes</button>
-            <button onClick={() => setCurrentPage('slogan')} className="hover:text-indigo-600">Slogan</button>
-            <button onClick={() => setCurrentPage('domain')} className="hover:text-indigo-600">Domínio</button>
-            <button onClick={() => setCurrentPage('about')} className="hover:text-indigo-600">Sobre</button>
+          
+          {/* Desktop Menu */}
+          <div className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+            {navLinks}
           </div>
+
+          {/* Mobile Hamburger */}
+          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </nav>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden border-t border-slate-100 overflow-hidden"
+            >
+              <div className="flex flex-col gap-4 p-6 text-sm font-medium text-slate-600">
+                {navLinks}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       <div className="flex-grow">
@@ -164,11 +187,11 @@ export default function App() {
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6"
+              className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6"
             >
               Gerador de Nomes para Empresas
             </motion.h1>
-            <p className="text-xl text-slate-600 mb-10">
+            <p className="text-lg md:text-xl text-slate-600 mb-10">
               Digite uma palavra e gere nomes criativos para sua empresa ou projeto.
             </p>
 
