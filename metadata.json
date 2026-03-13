@@ -1,0 +1,5 @@
+{
+  "name": "NameCreator",
+  "description": "Gerador de nomes criativos para empresas e startups com base em palavras-chave.",
+  "requestFramePermissions": []
+}
