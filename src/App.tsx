@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Copy, RefreshCw, Wand2, Info, ArrowDownToLine, Menu, X, Download } from 'lucide-react';
 import SloganGenerator from './components/SloganGenerator';
 import DomainChecker from './components/DomainChecker';
+import InstallBanner from './components/InstallBanner';
 
 const prefixes = ['Neo', 'Nova', 'Zen', 'Sky', 'Tech', 'Blue', 'Purple', 'Swift', 'Prime', 'Apex'];
 const suffixes = ['ify', 'io', 'ly', 'hub', 'labs', 'core', 'flow', 'base', 'sync', 'grid'];
@@ -269,6 +270,7 @@ export default function App() {
       <footer className="py-8 text-center border-t border-slate-100">
         <p className="text-sm text-slate-400">&copy; {new Date().getFullYear()} NameCreator. Todos os direitos reservados.</p>
       </footer>
+      <InstallBanner />
     </div>
   );
 }
