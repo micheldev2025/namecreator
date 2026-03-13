@@ -10,7 +10,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Copy, RefreshCw, Wand2, Info, ArrowDownToLine, Menu, X } from 'lucide-react';
+import { Copy, RefreshCw, Wand2, Info, ArrowDownToLine, Menu, X, Download } from 'lucide-react';
 import SloganGenerator from './components/SloganGenerator';
 import DomainChecker from './components/DomainChecker';
 
@@ -249,9 +249,9 @@ export default function App() {
                 </button>
                 <button
                   onClick={downloadNames}
-                  className="mt-4 px-6 py-2 border border-slate-300 rounded-full text-sm font-medium text-slate-600 hover:border-indigo-500 hover:text-indigo-600 transition flex items-center gap-2 mx-auto"
+                  className="mt-4 px-6 py-3 bg-indigo-50 text-indigo-700 rounded-full text-sm font-semibold hover:bg-indigo-100 transition flex items-center gap-2 mx-auto shadow-sm"
                 >
-                  <ArrowDownToLine className="w-4 h-4" />
+                  <Download className="w-5 h-5" />
                   Baixar lista
                 </button>
               </>
